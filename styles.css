@@ -7,31 +7,69 @@ body {
   padding: 0;
 }
 
-/* Navigation bar styles */
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* Ensure it's above other elements */
+  display: flex;                      /* Use Flexbox layout */
+  justify-content: space-between;    /* Push logo to the left, links to the right */
+  align-items: center;               /* Vertically center the items */
   background-color: black;
   color: white;
-  padding: 15px 20px;
-  display: flex;
-  gap: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Optional subtle shadow */
+  padding: 30px 0px;
+  position: fixed;                   /* Keep navbar fixed at top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+/* New wrapper to constrain width of navbar content */
+.navbar > * {
+  max-width: 97vw;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-.navbar a {
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+.nav-links a {
   color: white;
   text-decoration: none;
   font-weight: bold;
 }
 
-.navbar a:hover {
+.nav-links a:hover {
   text-decoration: underline;
 }
 
-/* Additional spacing for the page after the navbar */
-body > *:not(header) {
+/*Center text on home page*/
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* Vertical centering */
+  align-items: center;       /* Horizontal centering */
+  height: calc(100vh - 150px);  /* Can control vertical centering position */
+  padding: 20px;
+  text-align: center;
+}
+
+.contact-footer {
+  margin-top: 0px;
+  text-align: center;
   padding: 20px;
 }
+
+.contact-icon {
+  color: black;
+  margin: 10px 15px;
+  font-size: 48px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
