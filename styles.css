@@ -73,3 +73,35 @@ body {
   transition: color 0.3s;
 }
 
+.image-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 0;
+  background: white;
+}
+
+.marquee-track {
+  display: inline-block;
+  animation: marquee 40s linear infinite;
+}
+
+.marquee-track img {
+  width: auto;
+  height: 300px;
+  margin: 0 20px;
+  border-radius: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Animation keyframes */
+@keyframes marquee {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
