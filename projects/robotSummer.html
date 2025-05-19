@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <title>Robot Summer</title>
   <link rel="stylesheet" href="../styles.css">
 </head>
@@ -19,24 +19,182 @@
   <div class="content-container">
     <!-- Main Content -->
     <div class="main-content">
-      <section id="overview">
-        <h2>Overview</h2>
-        <p>Project overview details...</p>
+      <section id="Skills Practiced">
+        <h2>Skills Practiced</h2>
+        <ol>
+            <li>Mechanical Design</li>
+            <li>CAD (Solidworks) and Manufacturing</li>
+            <li>Soldering</li>
+            <li>Project Management and Problem Solving </li>
+        </ol>
       </section>
 
-      <section id="methodology">
-        <h2>Methodology</h2>
-        <p>How you built or researched this project...</p>
+      <section id="Overview+Background">
+        <h2>Overview + Background</h2>
+        <p>ENPH 253 is the UBC Engineering Physics program's annual 6-week long robot competition (aka Robot Summer). Students work in teams of 4 to build an autonomous 
+            robot that can score points based on rules that change according to the competition theme for that year. With rare exception, students design everything about 
+            the robots: 
+        </p>
+        <ol>
+            <li>Mechanical parts need to be fabricated either by hand, laser/waterjet cut, 3D printed, or machined</li>
+            <li>Electrical circuits must be soldered/wired by hand</li>
+            <li>And software to control the robot is written by us</li>
+        </ol>
+        <p>I did the competition in 2024 and the theme was inspired by the game Overcooked - a chaotic co-op game about coordinating with your teammates to cook food.
+            The cooperative nature of the game led to the 2024 competition having one very important note: For the first time in Robot Summer history, <b>teams would make 2 robots</b>
+            that coordinate with each other to assemble food.
+        </p>
       </section>
 
-      <section id="results">
-        <h2>Results</h2>
-        <p>Key findings or demos...</p>
+      <section id="Competition Rules">
+        <h2>Competition Rules</h2>
+        <p>Here is a diagram of the competition surface:</p>
+        <figure class="description-image">
+            <img src="../assets/robotSummer/253layout.png" alt="253 Comp Surface">
+            <figcaption>Competition layout</figcaption>
+        </figure>
+        <p>As you can see, there are 2 tracks, one for each robot. Remote control of any kind is not allowed and robots need to be small enough to pass through their own "kitchens."
+            Additionally, robots cannot extend past the far edges of their kitchen's counter to the other kitchen. Points are achieved by teams delivering various food items 
+            comprised of raw ingredients on plates to the serving area; points are deducted if food isn't well-assembled (no customer would want a burger thats falling apart).
+            There are some more intricacies on cooking/cutting and a lot of pedantics but for now, this summary of the rules should give a good picture of what the competition looked like.
+        </p>
+        <div class="file-box">
+            <p>For completeness though, here are the complete rules:</p>
+            <a href="../assets/enph2532024-rules.pdf" class="file-link" target="_blank">
+                <i class="fas fa-file-pdf"></i> enph2532023-rules.pdf
+            </a>
+        </div>
+
       </section>
 
-      <section id="conclusion">
-        <h2>Conclusion</h2>
-        <p>Wrap-up and future directions...</p>
+      <section id="Initial Ideas/Designs">
+        <h2>Initial Ideas/Designs</h2>
+        <p>One of the main issues we grappled with in the early stages was the inherent assymetry of the two robots. Each bot has access to different stations and some tasks
+            are exclusive to one robot. For example, the robot on the second track (the one with the serving station), robot B, is the only robot that can deliver food while 
+            the robot on the first track, robot A, has access to way more ingredient stations. We decided that the majority of the cooking/assembly work would fall to A while
+            B would do relatively less assembly and focus on delivery. As such, and inspired by Breaking Bad, we named B Jesse Pinkman, or JP, and A as Heisenburger, or HB.
+            Lastly, we decided to go for deluxe burgers (bun, patty, lettuce, tomato, cheese) as they were worth the most points. To summarise:
+        </p>
+        <ul>
+            <li>HB would take a plate and assemble burgers as much as it could then pass it to JP</li>
+            <li>JP would finish assembling the burger, with a top bun passed from HB's kitchen</li>
+            <li>JP serves the burger</li>
+        </ul>
+        <p>With duties split, we now had to figure out to make each bot do what we want it to. After some spitballing, we landed on some comprehensive <b>initial</b> designs 
+            for each robot. (these would not last as we encountered more design challenges). HB would be comprised of a conveyor belt system and two plate holders. The belts 
+            would manipulate any food items we need as well as whatever burger we were currently assembling. To get the plate holders up to belt level, we would use servos 
+            attached to a pulley system to move the plate holders up and down on a guided track to avoid collision with the belt.
+        </p>
+        <figure class="description-image">
+            <img src="../assets/robotSummer/initialHB.png" alt="Initial HB">
+            <figcaption>Initial design of HB</figcaption>
+        </figure>
+        <p>We would soon scrap the pulleys and opt for a different method to move the holder up and down since the pulleys would be too unreliable and could be sensitive to 
+            vibrations. I'll cover what would replace it in the next section. but that'll be covered in the next section. JP would have a similar conveyor belt system but 
+            would have just that plus two claws on both ends for food intake/output. 
+        </p>
+        <figure class="description-image">
+            <img src="../assets/robotSummer/initialJP.png" alt="Initial JP">
+            <figcaption>Initial design of JP</figcaption>
+        </figure>
+
+        <p>One component that we ended up cutting was the fry dispenser. We had initially wanted to serve fries alongside the burger since they were worth quite a bit
+            of points but time constraint led us to scrapping the design. Nonetheless, I thought I'd talk about it still since it was a part of the initial design.
+            Fries in competition are 4 strips velcroed together, the fry dispenser aligned all 4 strips and used a cutter connected to a servo to split the fry before a
+            rack and pinion would push the individual fry onto the belt.
+        </p>
+        <figure class="description-image">
+            <img src="../assets/robotSummer/fryDispenser.png" alt="Fry Dispenser">
+            <figcaption>Design of the scrapped fry dispenser</figcaption>
+        </figure>
+
+        <p>Lastly, for driving we'd use omni-wheels to simplify steering since it vastly simplified driving and allowed us to focus more on object manipulation, which
+            was a very common design choice among teams. Before moving on, I want to comment that these designs were very much overnegineerred. There are a lot of moving parts
+            and unneeded complexity. In a way, that was intentional. We had decided at the start that if we were going to win, we had to do it in style; we wanted to learn a
+            lot and have fun so we were fine with a relatively complex design. In hindsight, this was a fine mindset to have, but, at least for me, I failed to temper it with
+            a pragmatic approach and the consequences of such complex designs would soon rear their head.
+        </p>
+      </section>
+
+      <section id="The Lift System">
+        <h2>The Lift System</h2>
+        <p>While all teammates dabbled in every aspect of the project, I was primarily in charge of the mechanical design along with my teammate Anton Shoham. Our final 
+            designs ended up having some key subsystems:
+        </p>
+        <ul>
+            <li>Chassis and drivetrain for both bots</li>
+            <li>Conveyor Belt system for both bots</li>
+            <li>Claws for both bots</li>
+            <li>Lift system for HB</li>
+        </ul>
+        <p>
+            Anton and I both worked on the claws, chassis, and drivetrains. The belt systems were primarily Anton while I worked extensively on the lift system for HB. 
+            I mentioned previously that we would quickly scrap the pulleys to move the plate holders up and down. This lift system is what ended up replacing it. The lift had
+            a couple of requirements:
+        </p>
+        <ol>
+            <li>The platform had to be able to reliably and stably move in two axes</li>
+            <li>The system had to be as small as possible</li>
+            <li>Movement needs to be controllable</li>
+        </ol>
+        <p>
+            As this project was my first real exposure to comprehensive mechanical design, there was a lot of experimentation and figuring out what worked since, at
+            the time, I lacked the intuition and experience I possess now when it comes to designing mechanical systems. I had to learn the fundamentals such as what
+            fixtures I would need and how to translate motion. To mimic the pulley's guided movement, I wanted the lift to be able to move in both a vertical axis
+            and a horizontal axis. My first step was figuring out how to achieve vertical movement. I decided a DC motor with a lead screw would be best for this task 
+            as the range of motion was big enough that servos were off the table and lead screws provided a reliable way to translate the motion.
+        </p>
+        <figure class="description-image">
+            <video autoplay muted loop playsinline>
+                <source src="../assets/robotSummer/leadScrew.mp4" type="video/mp4">
+            </video>
+            <figcaption>Me figuring out how lead screws worked for the first time</figcaption>
+        </figure>
+        <p>Now the concept was promising but there were some clear flaws with my initial exploration of lead screws:</p>
+        <ul>
+            <li>How would I mount the lift to the lead screw</li>
+            <li>How do I minimise wobbling while the motor is running and keep the entire system stable</li>
+            <li>How would I add the horizontal motion on top of all this</li>
+        </ul>
+        <p>After some time thinking about these challenges, I landed on this design:</p>
+        <figure class="description-image">
+            <img src="../assets/robotSummer/liftCAD.png" alt="liftCAD">
+            <figcaption>Design of the lift system</figcaption>
+        </figure>
+        <figure class="description-image">
+            <img src="../assets/robotSummer/closeUps.png" alt="liftCAD closeups">
+            <figcaption>The gear-servo system for horizontal motion and a close up on the mounting nut</figcaption>
+        </figure>
+        <p>
+            I used a variety of materials based on different factors. The platform had a mix of hardboard, balsa wood, and acrylic while the various other parts were either
+            plastic, aluminum or steel. The lead screw itself was made of steel due to the manufacturer while the other supporting rod was aluminum to save on weight. plastic
+            was used for the mounts since their relatively complex geometry lended well to 3D printing. Acrylic was used for the bottom of the platform so I could see into the
+            gear system and hardboard/balsa were used because of their availability and ease of use. To mount the lift on the lead screw, I designed 
+            a mounting nut and horizontal motion would be achieved through a servo-gear system that moved with the lift. For stability, I added a guide rail as well as two 
+            pieces of hardboard to keep the platform parallel to the ground.
+        </p>
+        <figure class="description-image">
+            <img src="../assets/robotSummer/liftAnnotated.png" alt="liftCAD explained">
+            <figcaption>Close ups of the lift stabilisers and me machining the mounting nut</figcaption>
+        </figure>
+        <p>
+            All the pieces of harboard were press-fit together which I would usually be concerned with due to the difficulty of getting the correct hole sizes
+            but the high accuracy of the laser cutter meant that wasn't a problem. The design worked like a charm; the platform could stably move in two axes while 
+            not being large. All that was left was to control the movement. The servo was easy but the DC motor was a challenge but I could use the fact that food 
+            assembly and plate stacking was a well-defined process. After consulting with Soroush and Jacob, my teammates primarily responsible for the electrical systems
+            and software, I placed a microswitch on the bottom of the platform, on the side which contained the mounting nut. We decided that at the start of a run, we
+            would run the motor till the platform hit the top of the motor mount and use that as a reference position. From there we could measure the position of the platform
+            after running the motor at a certain voltage after a certain amount of time and use that to hardcode software. It wasn't the best solution but we were running tight
+            on time for the competition and I trusted Soroush and Jacob.
+        </p>
+        <p>
+            With some last minute adjustments to accomodate the drivetrain (the DC motor was moved above the platform on a hardboard piece), the lift system was complete and
+            ready to go on HB.
+        </p>
+        <figure class="description-image">
+            <img src="../assets/robotSummer/liftIRL.jpg" alt="lift IRL">
+            <figcaption>Lift system on the physical robot</figcaption>
+        </figure>
       </section>
     </div>
 
@@ -44,10 +202,10 @@
     <aside class="toc">
       <h3>Contents</h3>
       <ul>
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#methodology">Methodology</a></li>
-        <li><a href="#results">Results</a></li>
-        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#Overview+Background">Overview+Background</a></li>
+        <li><a href="#Competition Rules">Competition Rules</a></li>
+        <li><a href="#Initial Ideas/Designs">Initial Ideas/Designs</a></li>
+        <li><a href="#The Lift System">The Lift System</a></li>
       </ul>
     </aside>
   </div>
