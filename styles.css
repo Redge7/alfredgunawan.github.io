@@ -173,11 +173,33 @@ body {
 /*Individual Project Styles*/
 
 /* General layout */
+
+.page-header {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  margin-bottom: 2rem;
+  border-bottom: 3px solid #333;
+  margin-top: 70px;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.page-header .subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  font-style: italic;
+}
+
 .content-container {
   display: flex;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 80px 2rem 2rem; /* top padding = navbar height + spacing */
+  padding: 0px 2rem 2rem; /* top padding = navbar height + spacing */
 }
 
 /* Main content */
