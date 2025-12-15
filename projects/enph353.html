@@ -17,9 +17,16 @@
   </nav>
 
   <header class="page-header">
-    <h1>ENPH 353: ML-Powered Robot Detective</h1>
-    <p class="subtitle">Spring 2025</p>
+    <div class="header-content">
+      <a href="../projects.html" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back to Projects
+      </a>
+      <h1>ENPH 353: ML-Powered Robot Detective</h1>
+      <p class="subtitle">Spring 2025</p>
+    </div>
   </header>
+
+
 
   <div class="content-container">
     <!-- Main Content -->
@@ -36,16 +43,65 @@
       <section id="Overview+Background">
         <h2>Overview+Background</h2>
         <p>
-            ENPH 353 was a project course aimed at introducing students to machine learning techniques and
-            getting us familiar with the concepts of data collection/analysis, model training, and working in a
-            linux environment. The project of this course was a competition to create the best robot detective 
-            that could independently drive around a predefined course and read clues from boards placed around the map. 
+          ENPH 353 was a project course aimed at introducing students to machine learning techniques and
+          getting us familiar with the concepts of data collection/analysis, model training, and working in a
+          linux environment. The project of this course was a competition to create the best robot detective 
+          that could independently drive around a predefined course and read clues from boards placed around the map. 
         </p>
         <figure class="description-image">
             <img src="../assets/enph353/mapOverview.png" alt="353 Map">
             <figcaption>Simulated Competition Map</figcaption>
         </figure>
-
+        <figure class="description-image">
+            <img src="../assets/enph353/clueboardExample.png" alt="353 Cluueboard">
+            <figcaption>An example of a clueboard</figcaption>
+        </figure>
+        <p>
+          To give slightly more detail, the robot detective was a simulated self-driving car that had to navigate a course
+          while avoiding obstacles and reading clueboards using computer vision. The clueboards contained alphanumeric characters
+          that the robot had to read and report back to a central server. The robot was scored based on how many clueboards it
+          could successfully read within a time limit as well as some other factors such as good driving and collisions.
+        </p>
+        <p>
+          Before discussing this project further, I want to preface this by saying this page is not intended to be comprehensive at all.
+          At the end of the course, our instructors required us to create a report with a much more complete overview of
+          the technical details of the project. This report can be found <a href="../assets/enph353/enph353_report.pdf" target="_blank" style="color: blue; text-decoration: underline;">here</a>. 
+          What I will be discussing on this page is more a brief overview of the concepts and skills I applied as well as a condensed summary of how our robot worked.
+          I want to provide a page that is readable without ML knowledge and that still gives a clear insight into my experience with this project.
+          Lastly, I would like to thank my teammate, Rachel, for her contributions to this project. We wouldn't have scored as much as we did 
+          without her work.
+        </p>
+      </section>
+      <section id="Agent Structure">
+        <h2>Agent Structure</h2>
+        <p>
+          This section will be brief since this content is detailed in the report; the robot detective was structured as an agent 
+          that contained two modules:
+        </p>
+        <ul>
+            <li><strong>Driving Module:</strong> The module that controlled navigation around the course </li>
+            <li><strong>Clue Reading Module:</strong> The module that controlled clue interpretation and submission </li>
+        </ul>
+        <p>
+          As mentioned in the report, each module was developed and tested independently before being integrated into the final agent.
+          I was responsible for the clue reading module so that, and any concepts related to it, are what I'll be discussing on this page.
+        </p>
+      </section>
+      <section id="Clue Reading: Image Processing">
+        <h2>Clue Reading: Image Processing</h2>
+        <p>
+          The main problem involved in clue reading was how do we take an image of a clueboard and extract the alphanumeric characters from it?
+          Well, this course was all about machine learning so I wanted to apply some ML techniques to solve this problem.
+          In particular, one concept felt perfect for this problem: Convolutional Neural Networks (CNNs). I'll discuss CNNs more 
+          in a later section and why they're ideal for this problem, but for now, we can view CNNs as functions that take an
+          image as an input and spit out a character.
+        </p>
+      </section>
+      <section id="Clue Reading: Character Extraction">
+        <h2> Clue Reading: Character Extraction</h2>
+      </section>
+      <section id="Machine Learning and Neural Networks">
+        <h2>Machine Learning and Neural Networks</h2>
       </section>
     </div>
 
@@ -54,6 +110,10 @@
       <h3>Contents</h3>
       <ul>
         <li><a href="#Overview+Background">Overview+Background</a></li>
+        <li><a href="#Agent Structure">Agent Structure</a></li>
+        <li><a href="#Clue Reading: Image Processing">Clue Reading: Image Processing</a></li>
+        <li><a href="#Clue Reading: Character Extraction">Clue Reading: Character Extraction</a></li>
+        <li><a href="#Machine Learning and Neural Networks">Machine Learning and Neural Networks</a></li>
       </ul>
     </aside>
   </div>

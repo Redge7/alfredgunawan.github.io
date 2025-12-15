@@ -283,3 +283,26 @@ body {
   color: #666;
   font-style: italic;
 }
+
+.back-button {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  color: #666;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.back-button:hover {
+  color: #333;
+}
+
+.page-header {
+  position: relative;
+  text-align: center;
+  padding: 2rem 1rem 2rem 3rem; /* Extra left padding for button */
+  /* ... rest of styles ... */
+}
