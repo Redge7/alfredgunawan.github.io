@@ -53,7 +53,7 @@
             <figcaption>Simulated Competition Map</figcaption>
         </figure>
         <figure class="description-image">
-            <img src="../assets/enph353/clueboardExample.png" alt="353 Cluueboard">
+            <img src="../assets/enph353/clueboardExample.png" alt="353 Clueboard">
             <figcaption>An example of a clueboard</figcaption>
         </figure>
         <p>
@@ -65,7 +65,12 @@
         <p>
           Before discussing this project further, I want to preface this by saying this page is not intended to be comprehensive at all.
           At the end of the course, our instructors required us to create a report with a much more complete overview of
-          the technical details of the project. This report can be found <a href="../assets/enph353/enph353_report.pdf" target="_blank" style="color: blue; text-decoration: underline;">here</a>. 
+          the technical details of the project. This report can be found <a href="../assets/enph353/ENPH_353_Final_Report.pdf" target="_blank" style="color: blue; text-decoration: underline;">here</a>. 
+          Additionally, I also documented my experimentation in a google colab notebook which can be found <a href="https://colab.research.google.com/drive/1PeZeJDiXuhr8eD7yGDdbYNWeRfGkBjfO#scrollTo=AcwLL4iCwDIr" target="_blank" style="color: blue; text-decoration: underline;">here</a>.
+          There're also some more resources useful for anyone wanting to take a deeper dive into my iterative process which can be found in This
+          <a href="https://drive.google.com/drive/folders/1i6Xj6-i438DQ6IKZgsq-w6gbODPk8Vm9?usp=sharing" target="_blank" style="color: blue; text-decoration: underline;">google drive</a> that also contains the previous colab notebook.
+        </p>  
+        <p>  
           What I will be discussing on this page is more a brief overview of the concepts and skills I applied as well as a condensed summary of how our robot worked.
           I want to provide a page that is readable without ML knowledge and that still gives a clear insight into my experience with this project.
           Lastly, I would like to thank my teammate, Rachel, for her contributions to this project. We wouldn't have scored as much as we did 
@@ -83,11 +88,12 @@
             <li><strong>Clue Reading Module:</strong> The module that controlled clue interpretation and submission </li>
         </ul>
         <p>
+          Its physical body was essentially a cuboid on wheels with two cameras to its diagonal left and right.
           As mentioned in the report, each module was developed and tested independently before being integrated into the final agent.
           I was responsible for the clue reading module so that, and any concepts related to it, are what I'll be discussing on this page.
         </p>
       </section>
-      <section id="Clue Reading: Image Processing">
+      <section id="Clue Reading">
         <h2>Clue Reading: Image Processing</h2>
         <p>
           The main problem involved in clue reading was how do we take an image of a clueboard and extract the alphanumeric characters from it?
@@ -96,12 +102,66 @@
           in a later section and why they're ideal for this problem, but for now, we can view CNNs as functions that take an
           image as an input and spit out a character.
         </p>
-      </section>
-      <section id="Clue Reading: Character Extraction">
-        <h2> Clue Reading: Character Extraction</h2>
+        <p>
+          Continuing with our analogy of CNNs as functions, CNNs have well-defined inputs and outputs. Since, I wanted the behaviour of
+          the CNN to take in images from the agent's cameras and output what character they represent, I defined the input as a 108x108 pixel
+          grayscale image and output as one of 36 classes: the 26 letters of the alphabet and the 10 digits. So with
+          our "function" well-defined, I just had to get training data which fit this input-output structure. This is a whole problem in itself
+          considering a camera image could look like this:
+        </p>
+        <figure class="description-image">
+            <img src="../assets/enph353/cameraImageExample.png" alt="353 Camera Image">
+            <figcaption>A frame from the agent's left camera</figcaption>
+        </figure>
+        <p>
+          Clearly, this image contains a lot more information than just the clueboard characters. There's a lot more than just the clueboard 
+          characters in this image and any CNN would have trouble distilling this down into just one character since there are multiple.
+          We want to make the CNN's job as easy as possible and we can do this by isolating each character into its own image. This is 
+          easily achievable with the open-source <a href="https://docs.opencv.org/4.x/index.html" target="_blank" style="color: blue; text-decoration: underline;">CV2 library</a>
+          in Python - a library designed for image processing tasks. While seemingly daunting at first, 
+          the problem of isolating characters can be broken down into a series of simple steps:
+        </p>
+        <ol>
+          <li>Isolate the clueboard from the rest of the image</li>
+          <li>Binarize the clueboard image (turn it into a black and white image)</li>
+          <li>Find the largest contour to further isolate the white box where the text will be</li>
+          <li>Use the contours in that region to extract characters</li>
+        </ol>
+        <p>
+          There's a decent amount of technical detail involved in this process so if you're interested, check out the colab notebook I linked earlier.
+          Anyways, after applying these steps, we can transform the original camera image into character images that look like this:
+        </p>
+        <figure class="description-image">
+            <img src="../assets/enph353/tExample.png" alt="353 T">
+            <figcaption>A "T" extracted from a clueboard</figcaption>
+        </figure>
+        <figure class="description-image">
+            <img src="../assets/enph353/wExample.png" alt="353 W">
+            <figcaption>A "W" extracted from a clueboard</figcaption>
+        </figure>
+        <p>
+          Now that I had character images, I used these to train the CNN (details on this in the next section) so that it 
+          could learn to recognize characters from images like these. Once that was complete, using the CNN is as simple
+          as feeding in these character images and getting the predicted character as an output. Add in some logic for clue
+          submission and our robot can score points!
+        </p>  
       </section>
       <section id="Machine Learning and Neural Networks">
         <h2>Machine Learning and Neural Networks</h2>
+        <p>
+          I kinda breezed past a lot of the details about how the CNN worked in the previous section since that's what this
+          section is for (there will be some math). To oversimplify, machine learning is a field of computer science that focuses on systems
+          that can learn from data to make predictions or decisions without being explicitly programmed for specific tasks.
+          Where we would program a classical system or algorithm with a set of rules to follow, machine learning systems can take
+          training data and learn patterns from it to make predictions on new, unseen data. Neural
+          networks are a subset of machine learning models that are loosely inspired by the neurons in a human brain.
+          They consist of layers of interconnected nodes (or "neurons") that process and transmit information.
+        </p>
+        <p>
+          One question that you might have had during the previous image processing section is why didn't I define the CNN's
+          output as whole words? After all, the clueboards only contain words, not individual characters. It seems like it would be
+          more efficient to just have the CNN output whole words instead of having to extract characters first.
+        </p>
       </section>
     </div>
 
@@ -111,8 +171,7 @@
       <ul>
         <li><a href="#Overview+Background">Overview+Background</a></li>
         <li><a href="#Agent Structure">Agent Structure</a></li>
-        <li><a href="#Clue Reading: Image Processing">Clue Reading: Image Processing</a></li>
-        <li><a href="#Clue Reading: Character Extraction">Clue Reading: Character Extraction</a></li>
+        <li><a href="#Clue Reading">Clue Reading</a></li>
         <li><a href="#Machine Learning and Neural Networks">Machine Learning and Neural Networks</a></li>
       </ul>
     </aside>
