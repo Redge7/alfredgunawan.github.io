@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>ENPH 353</title>
   <link rel="stylesheet" href="../styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
@@ -158,12 +159,92 @@
           They consist of layers of interconnected nodes (or "neurons") that process and transmit information.
         </p>
         <p>
-          One question that you might have had during the previous image processing section is why didn't I define the CNN's
-          output as whole words? After all, the clueboards only contain words, not individual characters. It seems like it would be
-          more efficient to just have the CNN output whole words instead of having to extract characters first.
+          To go over the CNN I made for this project, I'd like to start by first building up from the basic components of a neural network.
+          As the name suggests, neural networks are made up of layers which each contain neurons. Neurons are the basic processing unit
+          of a neural network and each are essentially a mathematical function that takes in inputs, applies weights and biases to them, 
+          and produces an output. Mathematically, a single neuron computes a weighted sum of its inputs, adds a bias term, and then applies a nonlinear
+          activation function. If we denote the inputs as \(x_i\), the weights as \(w_i\), and the bias as \(b\), a single neuron can be represented as:
         </p>
         <p>
-          <i>Rest of page under construction...</i>
+          \( y = \sigma\left(\sum_i w_i x_i + b\right) \)
+        </p>
+        <p>
+          Where \(\sigma(\cdot)\) is an activation function. Common activation functions include ReLU (Rectified Linear Unit),
+          sigmoid, and tanh. The key idea here is nonlinearity: without activation functions, a neural network would collapse into
+          a single linear transformation and would be incapable of learning complex patterns.
+        </p>
+        <p>  
+          A standard fully connected (or "dense") neural network stacks many of layers of neurons together. During training, every neuron
+          adjusts its weights and biases to minimize a loss function, which measures how far its predictions are from
+          the correct answers. This optimization is typically done using gradient descent and backpropagation, where gradients
+          of the loss with respect to each parameter are computed efficiently and used to update the model. I won't talk about
+          gradient descent and backpropagation here but there are plenty of resources online that explain these concepts really well
+          such as <a href="https://www.youtube.com/watch?v=VMj-3S1tku0" target="_blank" style="color: blue; text-decoration: underline;">this amazing video by Andrej Karpathy</a>.
+        </p>
+        <figure class="description-image">
+            <img src="../assets/enph353/MLP.png" alt="MLP example">
+            <figcaption>An example neural network, specifically a multilayer perceptron (MLP). Each dot is a neuron that
+            applies weights, biases, and an activation function to its inputs to produce an output which gets fed into the next
+            neuron.
+            </figcaption>
+        </figure>
+        <p>
+          While fully connected networks work well for some problems, they scale poorly for image data. Images have strong
+          spatial structure: nearby pixels are highly correlated, and the same features (edges, corners, shapes) can appear
+          anywhere in the image. Treating every pixel as an independent input ignores this structure and leads to an explosion
+          in the number of parameters.
+        </p>
+        <p>
+          This is where Convolutional Neural Networks (CNNs) come in. CNNs are specifically designed to process grid-like data,
+          such as images. Instead of connecting every input pixel to every neuron, CNNs use convolutional layers that apply
+          small learnable filters (or kernels) across the image. Each filter slides over the input and computes a dot product
+          with local regions, producing a feature map that highlights where certain patterns appear.
+        </p>
+        <figure class="description-image">
+            <img src="../assets/enph353/CNNKernels.webp" alt="Kernels example">
+            <figcaption> How kernels operate on an image to produce feature maps.</figcaption>
+        </figure>
+        <p>
+          Early convolutional layers tend to learn simple features like edges and gradients. As we move deeper into the network,
+          later layers combine these low-level features into more abstract representations, such as shapes or even entire
+          objects. This hierarchical feature learning is one of the main strengths of CNNs.
+          CNNs often include pooling layers, which downsample feature maps by taking the maximum or average value over small
+          regions. Pooling reduces the spatial resolution of the data, making the network more computationally efficient and
+          more robust to small translations or noise in the input.
+        </p>
+        <figure class="description-image">
+            <img src="../assets/enph353/CNNlayers.jpeg" alt="CNN example">
+            <figcaption>Example layer structure of a CNN with convolutional, pooling, and fully connected layers. Note
+              the reduction in spatial dimensions as we go deeper into the network.
+            </figcaption>
+        </figure>
+        <p>
+          In my model, the convolutional and pooling layers act as a feature extractor, transforming the raw image into a
+          compact, high-level representation. This representation is then passed into one or more fully connected layers that
+          perform the final classification. The network is trained end-to-end, meaning the filters, weights, and biases are
+          all learned simultaneously from data. 
+        </p>
+        <p>
+          That was a lot of info but to summarise, neural networks are powerful and flexible tools that we can utilise
+          for complex tasks. CNNs, in particular, are well-suited for image data due to their ability to capture spatial hierarchies
+          of features which is why I utilised them for character reading. There's so much interesting math behind machine learning
+          but for this specific application, the core idea is that we can train a CNN to recognize characters from training data
+          and use it to read clueboards for our robot detective.
+        </p>
+      </section>
+      <section id="Conclusion">
+        <h2>Conclusion</h2>
+        <p>
+          ENPH 353 was one of my favorite courses I've taken at UBC so far. It was such a fun and engaging way to
+          get introduced to machine learning and being able to so directly apply the enthralling math behind it was so interesting.
+          I find it very rare that courses teach you interesting and useful knowledge and skills while also allowing you to immediately apply
+          them. I have a much bigger appreciation for and interest in machine learning and I would take this course again if I could.
+        </p>
+        <p>
+          I find one of the most valuable things I've gotten from this course is the ability to work independently. A lot of the course
+          was self-guided and while there were some amazing instructors and TAs to help, a lot of the learning came from my own experimentation.
+          I've gotten a lot of confidence in my ability to learn new concepts and skills on my own and I definitely want to explore
+          machine learning further and just more math in general.
         </p>
       </section>
     </div>
@@ -176,6 +257,7 @@
         <li><a href="#Agent Structure">Agent Structure</a></li>
         <li><a href="#Clue Reading">Clue Reading</a></li>
         <li><a href="#Machine Learning and Neural Networks">Machine Learning and Neural Networks</a></li>
+        <li><a href="#Conclusion">Conclusion</a></li>
       </ul>
     </aside>
   </div>
